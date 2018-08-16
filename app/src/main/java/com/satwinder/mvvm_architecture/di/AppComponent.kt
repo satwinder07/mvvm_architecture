@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * satwinder.singh@appstreet.io
  */
 @Singleton
-@Component(modules = arrayOf(AppModule::class,ApiModule::class))
+@Component(modules = [(AppModule::class), (ApiModule::class)])
 interface AppComponent {
    fun inject(userFragment: UserFragment)
 }
