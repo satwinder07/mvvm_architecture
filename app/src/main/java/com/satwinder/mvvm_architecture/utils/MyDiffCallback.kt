@@ -24,7 +24,8 @@ class MyDiffCallback(internal var newUser: List<User>, internal var oldUser: Lis
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldUser[oldItemPosition] == newUser[newItemPosition]
+        return oldUser[oldItemPosition].name == newUser[newItemPosition].name &&
+                oldUser[oldItemPosition].company == newUser[newItemPosition].company
     }
 
 }

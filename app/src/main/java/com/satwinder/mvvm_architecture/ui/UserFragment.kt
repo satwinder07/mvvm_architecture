@@ -2,6 +2,7 @@ package com.satwinder.mvvm_architecture.ui
 
 import android.annotation.SuppressLint
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
@@ -13,17 +14,18 @@ import android.view.View
 import android.view.ViewGroup
 import com.satwinder.mvvm_architecture.MVVMApp
 import com.satwinder.mvvm_architecture.R
+import com.satwinder.mvvm_architecture.di.Injectable
 import com.satwinder.mvvm_architecture.models.User
 import com.satwinder.mvvm_architecture.viewmodel.UserViewModelFactory
 import kotlinx.android.synthetic.main.fragment_user.*
 import javax.inject.Inject
 
 
-class UserFragment : Fragment() {
+class UserFragment : Fragment() ,Injectable{
 
 
     @Inject
-    lateinit var userViewModelFactory: UserViewModelFactory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var userViewModel: UserViewModel
 
@@ -33,15 +35,13 @@ class UserFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MVVMApp.mAppComponent!!.inject(this)
         arguments?.let {
-
         }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        userViewModel = ViewModelProviders.of(this, userViewModelFactory).get(UserViewModel::class.java)
+        userViewModel = ViewModelProviders.of(this, viewModelFactory).get(UserViewModel::class.java)
         fetchUser()
     }
 
@@ -62,7 +62,7 @@ class UserFragment : Fragment() {
     }
 
     fun fetchUser() {
-        userViewModel.user.observe(this, Observer {
+        userViewModel.getuser().observe(this, Observer {
             //todo upadte ui
             if(it !=null) {
                 if(it.data != null) {

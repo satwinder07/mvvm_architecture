@@ -1,10 +1,12 @@
 package com.satwinder.mvvm_architecture.ui
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.satwinder.mvvm_architecture.models.Resource
 import com.satwinder.mvvm_architecture.models.User
 import com.satwinder.mvvm_architecture.repository.UserRepository
+import javax.inject.Inject
 
 
 /**
@@ -12,8 +14,10 @@ import com.satwinder.mvvm_architecture.repository.UserRepository
  * Appstreet software private Ltd
  * satwinder.singh@appstreet.io
  */
-class UserViewModel constructor(userRepository: UserRepository) : ViewModel() {
+class UserViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
 
-    val user: LiveData<Resource<List<User>>> = userRepository.loadUser()
+    fun getuser():LiveData<Resource<List<User>>>{
+       return userRepository.loadUser()
+    }
 
 }

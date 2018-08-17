@@ -1,5 +1,6 @@
 package com.satwinder.mvvm_architecture.di
 
+import android.app.Application
 import android.arch.persistence.room.Room
 import android.content.Context
 import com.satwinder.mvvm_architecture.MVVMApp
@@ -14,21 +15,21 @@ import javax.inject.Singleton
  * Appstreet software private Ltd
  * satwinder.singh@appstreet.io
  */
-@Module
-class AppModule(internal val mMVVMApp: MVVMApp) {
+@Module(includes = [ViewModelModule::class])
+class AppModule {
 
     @Provides
     @Singleton
-    fun provideApplicationContext(): Context {
-        return mMVVMApp.applicationContext
+    fun provideApplicationContext(app: Application): Context {
+        return app.applicationContext
     }
 
 
     @Singleton
     @Provides
-    fun provideDb(): MVVMDb {
+    fun provideDb(app: Application): MVVMDb {
         return Room
-                .databaseBuilder(mMVVMApp, MVVMDb::class.java, "mvvm.db")
+                .databaseBuilder(app, MVVMDb::class.java, "mvvm.db")
                 .fallbackToDestructiveMigration()
                 .allowMainThreadQueries() //todo remove this later
                 .build()
