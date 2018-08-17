@@ -12,16 +12,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.satwinder.mvvm_architecture.MVVMApp
 import com.satwinder.mvvm_architecture.R
 import com.satwinder.mvvm_architecture.di.Injectable
 import com.satwinder.mvvm_architecture.models.User
-import com.satwinder.mvvm_architecture.viewmodel.UserViewModelFactory
 import kotlinx.android.synthetic.main.fragment_user.*
 import javax.inject.Inject
 
 
-class UserFragment : Fragment() ,Injectable{
+class UserFragment : Fragment(), Injectable {
 
 
     @Inject
@@ -64,8 +62,8 @@ class UserFragment : Fragment() ,Injectable{
     fun fetchUser() {
         userViewModel.getuser().observe(this, Observer {
             //todo upadte ui
-            if(it !=null) {
-                if(it.data != null) {
+            if (it != null) {
+                if (it.data != null) {
                     userList = it.data
                     adapter.updateList(userList)
                     swipeContainer.isRefreshing = false
@@ -77,10 +75,6 @@ class UserFragment : Fragment() ,Injectable{
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
-    }
-
-    override fun onDetach() {
-        super.onDetach()
     }
 
 
